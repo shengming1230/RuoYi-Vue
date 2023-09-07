@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.example.mapper.InstructionInfoMapper">
+
+    <resultMap type="com.ruoyi.example.domain.InstructionInfo" id="InstructionInfoResult">
+        <result property="id"    column="id"    />
+        <result property="instructionCode"    column="instruction_code"    />
+        <result property="instructionTitle"    column="instruction_title"    />
+        <result property="handleTime"    column="handle_time"    />
+        <result property="receiveUnit"    column="receive_unit"    />
+        <result property="emergencyDegree"    column="emergency_degree"    />
+        <result property="groupId"    column="group_id"    />
+        <result property="type"    column="type"    />
+        <result property="sourceInfo"    column="source_info"    />
+        <result property="instructionContent"    column="instruction_content"    />
+        <result property="baseInfo"    column="base_info"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="creatorBy"    column="creator_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="status"    column="status"    />
+        <result property="instructionStatus"    column="instruction_status"    />
+        <result property="feedback"    column="feedback"    />
+        <result property="personIds"    column="person_ids"    />
+        <result property="createDeptId"    column="create_dept_id"    />
+        <result property="leadPersonIds"    column="lead_person_ids"    />
+        <result property="petitionType"    column="petition_type"    />
+        <result property="pushTime"    column="push_time"    />
+        <result property="infoCategory"    column="info_category"    />
+    </resultMap>
+
+    <sql id="selectInstructionInfoVo">
+        select id, instruction_code, instruction_title, handle_time, receive_unit, emergency_degree, group_id, type, source_info, instruction_content, base_info, create_time, creator_by, update_time, status, instruction_status, feedback, person_ids, create_dept_id, lead_person_ids, petition_type, push_time, info_category from t_instruction_info
+    </sql>
+
+    <select id="selectInstructionInfoList" parameterType="com.ruoyi.example.domain.InstructionInfo" resultMap="InstructionInfoResult">
+        <include refid="selectInstructionInfoVo"/>
+        <where>
+            <if test="instructionCode != null  and instructionCode != ''"> and instruction_code = #{instructionCode}</if>
+            <if test="instructionTitle != null  and instructionTitle != ''"> and instruction_title = #{instructionTitle}</if>
+            <if test="handleTime != null "> and handle_time = #{handleTime}</if>
+            <if test="receiveUnit != null  and receiveUnit != ''"> and receive_unit = #{receiveUnit}</if>
+            <if test="emergencyDegree != null  and emergencyDegree != ''"> and emergency_degree = #{emergencyDegree}</if>
+            <if test="groupId != null "> and group_id = #{groupId}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="sourceInfo != null  and sourceInfo != ''"> and source_info = #{sourceInfo}</if>
+            <if test="instructionContent != null  and instructionContent != ''"> and instruction_content = #{instructionContent}</if>
+            <if test="baseInfo != null  and baseInfo != ''"> and base_info = #{baseInfo}</if>
+            <if test="creatorBy != null  and creatorBy != ''"> and creator_by = #{creatorBy}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="instructionStatus != null  and instructionStatus != ''"> and instruction_status = #{instructionStatus}</if>
+            <if test="feedback != null  and feedback != ''"> and feedback = #{feedback}</if>
+            <if test="personIds != null  and personIds != ''"> and person_ids = #{personIds}</if>
+            <if test="createDeptId != null "> and create_dept_id = #{createDeptId}</if>
+            <if test="leadPersonIds != null  and leadPersonIds != ''"> and lead_person_ids = #{leadPersonIds}</if>
+            <if test="petitionType != null  and petitionType != ''"> and petition_type = #{petitionType}</if>
+            <if test="pushTime != null "> and push_time = #{pushTime}</if>
+            <if test="infoCategory != null  and infoCategory != ''"> and info_category = #{infoCategory}</if>
+        </where>
+    </select>
+
+    <select id="selectInstructionInfoById" parameterType="Long" resultMap="InstructionInfoResult">
+        <include refid="selectInstructionInfoVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertInstructionInfo" parameterType="com.ruoyi.example.domain.InstructionInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into t_instruction_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="instructionCode != null">instruction_code,</if>
+            <if test="instructionTitle != null">instruction_title,</if>
+            <if test="handleTime != null">handle_time,</if>
+            <if test="receiveUnit != null">receive_unit,</if>
+            <if test="emergencyDegree != null">emergency_degree,</if>
+            <if test="groupId != null">group_id,</if>
+            <if test="type != null">type,</if>
+            <if test="sourceInfo != null">source_info,</if>
+            <if test="instructionContent != null">instruction_content,</if>
+            <if test="baseInfo != null">base_info,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="creatorBy != null">creator_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="status != null">status,</if>
+            <if test="instructionStatus != null">instruction_status,</if>
+            <if test="feedback != null">feedback,</if>
+            <if test="personIds != null">person_ids,</if>
+            <if test="createDeptId != null">create_dept_id,</if>
+            <if test="leadPersonIds != null">lead_person_ids,</if>
+            <if test="petitionType != null">petition_type,</if>
+            <if test="pushTime != null">push_time,</if>
+            <if test="infoCategory != null">info_category,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="instructionCode != null">#{instructionCode},</if>
+            <if test="instructionTitle != null">#{instructionTitle},</if>
+            <if test="handleTime != null">#{handleTime},</if>
+            <if test="receiveUnit != null">#{receiveUnit},</if>
+            <if test="emergencyDegree != null">#{emergencyDegree},</if>
+            <if test="groupId != null">#{groupId},</if>
+            <if test="type != null">#{type},</if>
+            <if test="sourceInfo != null">#{sourceInfo},</if>
+            <if test="instructionContent != null">#{instructionContent},</if>
+            <if test="baseInfo != null">#{baseInfo},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="creatorBy != null">#{creatorBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="instructionStatus != null">#{instructionStatus},</if>
+            <if test="feedback != null">#{feedback},</if>
+            <if test="personIds != null">#{personIds},</if>
+            <if test="createDeptId != null">#{createDeptId},</if>
+            <if test="leadPersonIds != null">#{leadPersonIds},</if>
+            <if test="petitionType != null">#{petitionType},</if>
+            <if test="pushTime != null">#{pushTime},</if>
+            <if test="infoCategory != null">#{infoCategory},</if>
+         </trim>
+    </insert>
+
+    <update id="updateInstructionInfo" parameterType="com.ruoyi.example.domain.InstructionInfo">
+        update t_instruction_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="instructionCode != null">instruction_code = #{instructionCode},</if>
+            <if test="instructionTitle != null">instruction_title = #{instructionTitle},</if>
+            <if test="handleTime != null">handle_time = #{handleTime},</if>
+            <if test="receiveUnit != null">receive_unit = #{receiveUnit},</if>
+            <if test="emergencyDegree != null">emergency_degree = #{emergencyDegree},</if>
+            <if test="groupId != null">group_id = #{groupId},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="sourceInfo != null">source_info = #{sourceInfo},</if>
+            <if test="instructionContent != null">instruction_content = #{instructionContent},</if>
+            <if test="baseInfo != null">base_info = #{baseInfo},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="creatorBy != null">creator_by = #{creatorBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="instructionStatus != null">instruction_status = #{instructionStatus},</if>
+            <if test="feedback != null">feedback = #{feedback},</if>
+            <if test="personIds != null">person_ids = #{personIds},</if>
+            <if test="createDeptId != null">create_dept_id = #{createDeptId},</if>
+            <if test="leadPersonIds != null">lead_person_ids = #{leadPersonIds},</if>
+            <if test="petitionType != null">petition_type = #{petitionType},</if>
+            <if test="pushTime != null">push_time = #{pushTime},</if>
+            <if test="infoCategory != null">info_category = #{infoCategory},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteInstructionInfoById" parameterType="Long">
+        delete from t_instruction_info where id = #{id}
+    </delete>
+
+    <delete id="deleteInstructionInfoByIds" parameterType="String">
+        delete from t_instruction_info where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

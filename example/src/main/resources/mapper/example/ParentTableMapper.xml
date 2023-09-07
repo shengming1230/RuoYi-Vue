@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.example.mapper.ParentTableMapper">
+
+    <resultMap type="com.ruoyi.example.domain.ParentTable" id="ParentTableResult">
+        <result property="id"    column="id"    />
+        <result property="parentTableCode"    column="parent_table_code"    />
+        <result property="title"    column="title"    />
+        <result property="handleTime"    column="handle_time"    />
+        <result property="content"    column="content"    />
+        <result property="baseInfo"    column="base_info"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <resultMap id="ParentTableChildTableResult" type="com.ruoyi.example.domain.ParentTable" extends="ParentTableResult">
+        <collection property="childTableList" notNullColumn="sub_id" javaType="java.util.List" resultMap="ChildTableResult" />
+    </resultMap>
+
+    <resultMap type="com.ruoyi.example.domain.ChildTable" id="ChildTableResult">
+        <result property="id"    column="sub_id"    />
+        <result property="childTableCode"    column="sub_child_table_code"    />
+        <result property="parentId"    column="sub_parent_id"    />
+        <result property="title"    column="sub_title"    />
+        <result property="handleTime"    column="sub_handle_time"    />
+        <result property="content"    column="sub_content"    />
+        <result property="baseInfo"    column="sub_base_info"    />
+        <result property="createTime"    column="sub_create_time"    />
+        <result property="createBy"    column="sub_create_by"    />
+        <result property="updateTime"    column="sub_update_time"    />
+        <result property="updateBy"    column="sub_update_by"    />
+        <result property="deleted"    column="sub_deleted"    />
+    </resultMap>
+
+    <sql id="selectParentTableVo">
+        select id, parent_table_code, title, handle_time, content, base_info, create_time, create_by, update_time, update_by, deleted from t_parent_table
+    </sql>
+
+    <select id="selectParentTableList" parameterType="com.ruoyi.example.domain.ParentTable" resultMap="ParentTableResult">
+        <include refid="selectParentTableVo"/>
+        <where>
+            <if test="parentTableCode != null  and parentTableCode != ''"> and parent_table_code = #{parentTableCode}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="handleTime != null "> and handle_time = #{handleTime}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="baseInfo != null  and baseInfo != ''"> and base_info = #{baseInfo}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+        </where>
+    </select>
+
+    <select id="selectParentTableById" parameterType="Long" resultMap="ParentTableChildTableResult">
+        select a.id, a.parent_table_code, a.title, a.handle_time, a.content, a.base_info, a.create_time, a.create_by, a.update_time, a.update_by, a.deleted,
+ b.id as sub_id, b.child_table_code as sub_child_table_code, b.parent_id as sub_parent_id, b.title as sub_title, b.handle_time as sub_handle_time, b.content as sub_content, b.base_info as sub_base_info, b.create_time as sub_create_time, b.create_by as sub_create_by, b.update_time as sub_update_time, b.update_by as sub_update_by, b.deleted as sub_deleted
+        from t_parent_table a
+        left join t_child_table b on b.parent_id = a.id
+        where a.id = #{id}
+    </select>
+
+    <insert id="insertParentTable" parameterType="com.ruoyi.example.domain.ParentTable" useGeneratedKeys="true" keyProperty="id">
+        insert into t_parent_table
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="parentTableCode != null">parent_table_code,</if>
+            <if test="title != null">title,</if>
+            <if test="handleTime != null">handle_time,</if>
+            <if test="content != null">content,</if>
+            <if test="baseInfo != null">base_info,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="deleted != null">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="parentTableCode != null">#{parentTableCode},</if>
+            <if test="title != null">#{title},</if>
+            <if test="handleTime != null">#{handleTime},</if>
+            <if test="content != null">#{content},</if>
+            <if test="baseInfo != null">#{baseInfo},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="deleted != null">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateParentTable" parameterType="com.ruoyi.example.domain.ParentTable">
+        update t_parent_table
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="parentTableCode != null">parent_table_code = #{parentTableCode},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="handleTime != null">handle_time = #{handleTime},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="baseInfo != null">base_info = #{baseInfo},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="deleted != null">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteParentTableById" parameterType="Long">
+        delete from t_parent_table where id = #{id}
+    </delete>
+
+    <delete id="deleteParentTableByIds" parameterType="String">
+        delete from t_parent_table where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteChildTableByParentIds" parameterType="String">
+        delete from t_child_table where parent_id in
+        <foreach item="parentId" collection="array" open="(" separator="," close=")">
+            #{parentId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteChildTableByParentId" parameterType="Long">
+        delete from t_child_table where parent_id = #{parentId}
+    </delete>
+
+    <insert id="batchChildTable">
+        insert into t_child_table( id, child_table_code, parent_id, title, handle_time, content, base_info, create_time, create_by, update_time, update_by, deleted) values
+		<foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.childTableCode}, #{item.parentId}, #{item.title}, #{item.handleTime}, #{item.content}, #{item.baseInfo}, #{item.createTime}, #{item.createBy}, #{item.updateTime}, #{item.updateBy}, #{item.deleted})
+        </foreach>
+    </insert>
+</mapper>
